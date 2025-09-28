@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>LGS 2026 Kutlama</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f8ff;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #f9f9f9, #e0f7fa);
       text-align: center;
       padding: 50px;
+      color: #2c3e50;
     }
     h1 {
       font-size: 36px;
-      color: #2c3e50;
+      margin-bottom: 20px;
     }
     #countdown {
       font-size: 24px;
@@ -22,19 +24,26 @@
     #message {
       font-size: 22px;
       margin-top: 30px;
-      color: #16a085;
+      color: #00695c;
+    }
+    input[type="password"] {
+      padding: 10px;
+      font-size: 18px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 10px;
     }
     button {
       padding: 15px 30px;
       font-size: 20px;
-      background-color: #3498db;
+      background-color: #ff6f61;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #2980b9;
+      background-color: #e64a19;
     }
     canvas {
       position: fixed;
@@ -48,8 +57,16 @@
 <body>
   <h1>LGS 2026 Sayfası</h1>
   <div id="countdown"></div>
+  <input type="password" id="secret" placeholder="Gizli kodu girin">
+  <br>
   <button onclick="checkUnlock()">CLICK ME!</button>
   <div id="message"></div>
+
+  <!-- Background music -->
+  <audio id="bg-music" autoplay loop muted>
+    <source src="your-music-file.mp3" type="audio/mpeg">
+    Tarayıcınız ses oynatmayı desteklemiyor.
+  </audio>
 
   <!-- Confetti canvas -->
   <canvas id="confetti-canvas"></canvas>
@@ -71,13 +88,18 @@
 
     function checkUnlock() {
       const now = new Date();
-      if (now >= unlockDate) {
+      const code = document.getElementById("secret").value;
+      const correctCode = "lgs2026";
+
+      if (now >= unlockDate && code === correctCode) {
         messageDiv.innerHTML = `
           <p>Umarım iyi bir liseye yerleşmişsindir!</p>
           <p>450 netin üstüne çıkmışsındır, sonuna kadar başardın!</p>
           <p>Seninle gurur duyuyorum 💙</p>
         `;
         launchConfetti();
+      } else if (code !== correctCode) {
+        messageDiv.innerHTML = `<p>Gizli kod yanlış. Lütfen tekrar deneyin.</p>`;
       } else {
         messageDiv.innerHTML = `
           <p>Lütfen bekle: ${unlockDate.toLocaleDateString('tr-TR')} (${daysLeft} gün kaldı)</p>
@@ -85,7 +107,6 @@
       }
     }
 
-    // Confetti animation
     function launchConfetti() {
       const canvas = document.getElementById('confetti-canvas');
       canvas.width = window.innerWidth;
