@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>LGS Motivasyon</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f0f8ff;
+    }
+    .message {
+      font-size: 24px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="message" id="content"></div>
+
+  <script>
+    // Set unlock date (5 days after LGS 2026)
+    const unlockDate = new Date("2026-06-12T00:00:00");
+
+    const now = new Date();
+    const contentDiv = document.getElementById("content");
+
+    if (now < unlockDate) {
+      contentDiv.innerHTML = `
+        <p>Umarım iyi bir liseye yerleşmişsindir!</p>
+        <p>450 netin üstüne çıkmışsındır, sonuna kadar başardın!</p>
+        <p>Sayfa 5 gün sonra açılacak. Beklemede kal ✨</p>
+      `;
+    } else {
+      // Redirect to actual site or show real content
+      window.location.href = "main.html"; // Replace with your actual page
+    }
+  </script>
+</body>
+</html>
