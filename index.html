@@ -98,6 +98,9 @@
       const code = document.getElementById("secret").value;
       const correctCode = "iloveyou1472";
 
+      // Start music on click (in case browser blocks autoplay)
+      document.getElementById("bg-music").play();
+
       if (now >= unlockDate && code === correctCode) {
         messageDiv.innerHTML = `
           <p>Umarım iyi bir liseye yerleşmişsindir!</p>
