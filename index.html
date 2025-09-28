@@ -66,7 +66,7 @@
   <div id="countdown"></div>
   <input type="password" id="secret" placeholder="Gizli kodu girin">
   <br>
-  <button onclick="checkUnlock()">CLICK ME!</button>
+  <button onclick="checkUnlock()">Enter</button>
   <div id="message"></div>
 
   <!-- Background music -->
@@ -96,7 +96,7 @@
     function checkUnlock() {
       const now = new Date();
       const code = document.getElementById("secret").value;
-      const correctCode = "lgs2026";
+      const correctCode = "iloveyou1472";
 
       if (now >= unlockDate && code === correctCode) {
         messageDiv.innerHTML = `
