@@ -35,8 +35,9 @@
       margin-bottom: 10px;
     }
     button {
-      padding: 15px 30px;
-      font-size: 20px;
+      padding: 12px 24px;
+      font-size: 18px;
+      margin: 5px;
       background-color: #ff6f61;
       color: white;
       border: none;
@@ -67,6 +68,15 @@
   <input type="password" id="secret" placeholder="Gizli kodu girin">
   <br>
   <button onclick="checkUnlock()">Enter</button>
+
+  <!-- Music Controls -->
+  <div style="margin-top: 20px;">
+    <button onclick="playMusic()">Play</button>
+    <button onclick="pauseMusic()">Pause</button>
+    <button onclick="muteMusic()">Mute</button>
+    <button onclick="unmuteMusic()">Unmute</button>
+  </div>
+
   <div id="message"></div>
 
   <!-- Background music -->
@@ -98,8 +108,7 @@
       const code = document.getElementById("secret").value;
       const correctCode = "iloveyou1472";
 
-      // Start music on click (in case browser blocks autoplay)
-      document.getElementById("bg-music").play();
+      playMusic(); // Start music on click
 
       if (now >= unlockDate && code === correctCode) {
         messageDiv.innerHTML = `
@@ -115,6 +124,27 @@
           <p>Lütfen bekle: ${unlockDate.toLocaleDateString('tr-TR')} (${daysLeft} gün kaldı)</p>
         `;
       }
+    }
+
+    function playMusic() {
+      const music = document.getElementById("bg-music");
+      music.muted = false;
+      music.play();
+    }
+
+    function pauseMusic() {
+      const music = document.getElementById("bg-music");
+      music.pause();
+    }
+
+    function muteMusic() {
+      const music = document.getElementById("bg-music");
+      music.muted = true;
+    }
+
+    function unmuteMusic() {
+      const music = document.getElementById("bg-music");
+      music.muted = false;
     }
 
     function launchConfetti() {
