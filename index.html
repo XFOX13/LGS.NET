@@ -2,39 +2,79 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>LGS Motivasyon</title>
+  <title>LGS 2026 Kutlama</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f8ff;
       text-align: center;
       padding: 50px;
-      background-color: #f0f8ff;
     }
-    .message {
+    h1 {
+      font-size: 36px;
+      color: #2c3e50;
+    }
+    #countdown {
       font-size: 24px;
-      color: #333;
+      margin: 20px 0;
+      color: #34495e;
+    }
+    #message {
+      font-size: 22px;
+      margin-top: 30px;
+      color: #16a085;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
     }
   </style>
 </head>
 <body>
-  <div class="message" id="content"></div>
+  <h1>LGS 2026 Sayfası</h1>
+  <div id="countdown"></div>
+  <button onclick="checkUnlock()">CLICK ME!</button>
+  <div id="message"></div>
 
   <script>
-    // Set unlock date (5 days after LGS 2026)
     const unlockDate = new Date("2026-06-12T00:00:00");
-
     const now = new Date();
-    const contentDiv = document.getElementById("content");
+    const countdownDiv = document.getElementById("countdown");
+    const messageDiv = document.getElementById("message");
 
-    if (now < unlockDate) {
-      contentDiv.innerHTML = `
-        <p>Umarım iyi bir liseye yerleşmişsindir!</p>
-        <p>450 netin üstüne çıkmışsındır, sonuna kadar başardın!</p>
-        <p>Sayfa 5 gün sonra açılacak. Beklemede kal ✨</p>
-      `;
+    // Calculate days left
+    const timeDiff = unlockDate - now;
+    const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    // Show countdown
+    if (timeDiff > 0) {
+      countdownDiv.innerHTML = `Lütfen bekle: ${unlockDate.toLocaleDateString('tr-TR')} (${daysLeft} gün kaldı)`;
     } else {
-      // Redirect to actual site or show real content
-      window.location.href = "main.html"; // Replace with your actual page
+      countdownDiv.innerHTML = `🎉 Sayfa artık erişilebilir!`;
+    }
+
+    // Button click logic
+    function checkUnlock() {
+      const now = new Date();
+      if (now >= unlockDate) {
+        messageDiv.innerHTML = `
+          <p>Umarım iyi bir liseye yerleşmişsindir!</p>
+          <p>450 netin üstüne çıkmışsındır, sonuna kadar başardın!</p>
+          <p>Seninle gurur duyuyorum 💙</p>
+        `;
+      } else {
+        messageDiv.innerHTML = `
+          <p>Lütfen bekle: ${unlockDate.toLocaleDateString('tr-TR')} (${daysLeft} gün kaldı)</p>
+        `;
+      }
     }
   </script>
 </body>
