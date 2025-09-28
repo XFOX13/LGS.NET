@@ -36,6 +36,13 @@
     button:hover {
       background-color: #2980b9;
     }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
@@ -44,24 +51,24 @@
   <button onclick="checkUnlock()">CLICK ME!</button>
   <div id="message"></div>
 
+  <!-- Confetti canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
   <script>
     const unlockDate = new Date("2026-06-12T00:00:00");
     const now = new Date();
     const countdownDiv = document.getElementById("countdown");
     const messageDiv = document.getElementById("message");
 
-    // Calculate days left
     const timeDiff = unlockDate - now;
     const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
-    // Show countdown
     if (timeDiff > 0) {
       countdownDiv.innerHTML = `Lütfen bekle: ${unlockDate.toLocaleDateString('tr-TR')} (${daysLeft} gün kaldı)`;
     } else {
       countdownDiv.innerHTML = `🎉 Sayfa artık erişilebilir!`;
     }
 
-    // Button click logic
     function checkUnlock() {
       const now = new Date();
       if (now >= unlockDate) {
@@ -70,11 +77,56 @@
           <p>450 netin üstüne çıkmışsındır, sonuna kadar başardın!</p>
           <p>Seninle gurur duyuyorum 💙</p>
         `;
+        launchConfetti();
       } else {
         messageDiv.innerHTML = `
           <p>Lütfen bekle: ${unlockDate.toLocaleDateString('tr-TR')} (${daysLeft} gün kaldı)</p>
         `;
       }
+    }
+
+    // Confetti animation
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+
+      const confetti = [];
+      for (let i = 0; i < 150; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 10 + 5,
+          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+          tilt: Math.random() * 10 - 5
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confetti.forEach(c => {
+          ctx.beginPath();
+          ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+          ctx.fillStyle = c.color;
+          ctx.fill();
+        });
+        update();
+      }
+
+      function update() {
+        confetti.forEach(c => {
+          c.y += c.d;
+          c.x += Math.sin(c.tilt);
+          if (c.y > canvas.height) {
+            c.y = -10;
+            c.x = Math.random() * canvas.width;
+          }
+        });
+      }
+
+      setInterval(draw, 30);
     }
   </script>
 </body>
