@@ -69,12 +69,10 @@
   <br>
   <button onclick="checkUnlock()">Enter</button>
 
-  <!-- Music Controls -->
+  <!-- Music Controls with Emojis -->
   <div style="margin-top: 20px;">
-    <button onclick="playMusic()">Play</button>
-    <button onclick="pauseMusic()">Pause</button>
-    <button onclick="muteMusic()">Mute</button>
-    <button onclick="unmuteMusic()">Unmute</button>
+    <button onclick="playMusic()">▶️</button>
+    <button onclick="pauseMusic()">⏸️</button>
   </div>
 
   <div id="message"></div>
@@ -135,16 +133,6 @@
     function pauseMusic() {
       const music = document.getElementById("bg-music");
       music.pause();
-    }
-
-    function muteMusic() {
-      const music = document.getElementById("bg-music");
-      music.muted = true;
-    }
-
-    function unmuteMusic() {
-      const music = document.getElementById("bg-music");
-      music.muted = false;
     }
 
     function launchConfetti() {
