@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>LGS 2026 Yeni Tasarım</title>
+  <title>LGS 2026 Giriş</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -14,7 +14,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
       color: #2c3e50;
     }
@@ -60,39 +60,99 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    #reveal {
+      display: none;
+      margin-top: 30px;
+    }
+    .photo-block {
+      margin-top: 20px;
+    }
+    .photo-block img {
+      width: 300px;
+      border: 2px solid white;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
   <h1>LGS 2026</h1>
+
+  <!-- Countdown -->
+  <p id="countdown"></p>
+
+  <!-- Inputs -->
   <input type="text" id="name" placeholder="İsmini girdim">
   <br>
   <input type="password" id="password" placeholder="Şifre girdir">
   <br>
   <button onclick="login()">Gir</button>
 
+  <!-- Music Controls -->
+  <div id="musicControls" style="display:none;">
+    <button onclick="playMusic()">▶️</button>
+    <button onclick="pauseMusic()">⏸️</button>
+    <audio id="bgMusic" src="background-music.mp3" loop></audio>
+  </div>
+
+  <!-- Message + Loader -->
   <div id="message"></div>
   <div id="loader"></div>
 
-  <!-- YouTube Buttons -->
-  <div style="margin-top: 30px;">
-    <button onclick="window.open('https://www.youtube.com/watch?v=VIDEO_ID1', '_blank')">📘 Türkçe Soruları</button>
-    <button onclick="window.open('https://www.youtube.com/watch?v=VIDEO_ID2', '_blank')">📗 Matematik Soruları</button>
-    <button onclick="window.open('https://www.youtube.com/watch?v=VIDEO_ID3', '_blank')">📙 Fen Bilimleri Soruları</button>
+  <!-- Reveal Section -->
+  <div id="reveal">
+    <!-- First Button + Photo -->
+    <div class="photo-block">
+      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID1', '_blank')">
+        LGS 2026'da nasıl Hazırlayacağın?
+      </button>
+      <br>
+      <img src="your-photo-1.jpg" alt="LGS Hazırlık">
+    </div>
+
+    <!-- Placeholder for more -->
+    <div class="photo-block">
+      <button>LGS 2026 için Strateji</button>
+      <br>
+      <img src="your-photo-2.jpg" alt="Strateji">
+    </div>
+
+    <div class="photo-block">
+      <button>LGS Motivasyon</button>
+      <br>
+      <img src="your-photo-3.jpg" alt="Motivasyon">
+    </div>
   </div>
 
   <script>
+    // Countdown Logic
+    const examDate = new Date("2026-06-12");
+    const today = new Date();
+    const diffTime = examDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("countdown").innerText = `LGS 2026: ${examDate.toLocaleDateString()} (${diffDays} gün kaldı)`;
+
+    // Music Logic
+    function playMusic() {
+      document.getElementById("bgMusic").play();
+    }
+    function pauseMusic() {
+      document.getElementById("bgMusic").pause();
+    }
+
+    // Login Logic
     function login() {
       const name = document.getElementById("name").value.trim();
       const password = document.getElementById("password").value.trim();
 
       if (password === "LGS2026" && name !== "") {
-        document.getElementById("message").innerText = `Girmeye başardın ${name}! Lütfen bekleyiniz...`;
+        document.getElementById("message").innerText = `Girmeye başardın ${name}!! Lütfen bekleyiniz...`;
         document.getElementById("loader").style.display = "inline-block";
+        document.getElementById("musicControls").style.display = "block";
 
         setTimeout(() => {
           document.getElementById("loader").style.display = "none";
-          document.getElementById("message").innerText = `Yükleme tamamlandı, ${name}! 🎉`;
-        }, 3000);
+          document.getElementById("reveal").style.display = "block";
+        }, 10000);
       } else {
         document.getElementById("message").innerText = "Şifre yanlış veya isim eksik. Lütfen tekrar deneyin.";
       }
