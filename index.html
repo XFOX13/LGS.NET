@@ -2,14 +2,14 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>LGS 2026 Kutlama</title>
+  <title>LGS 2026 Yeni Tasarım</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #f9f9f9);
+      background-color: #d0eaff;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,164 +18,84 @@
       text-align: center;
       color: #2c3e50;
     }
-    h1 {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
-    #countdown {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #34495e;
-    }
-    input[type="password"] {
+    input[type="text"], input[type="password"] {
       padding: 10px;
       font-size: 18px;
-      border: 2px solid #ccc;
+      border: 2px solid #ffffff;
       border-radius: 6px;
-      margin-bottom: 10px;
+      margin: 10px;
+      width: 250px;
+      background-color: #f9f9f9;
     }
     button {
       padding: 12px 24px;
       font-size: 18px;
-      margin: 5px;
-      background-color: #ff6f61;
-      color: white;
-      border: none;
+      margin: 10px;
+      background-color: #ffeb3b;
+      color: #2c3e50;
+      border: 2px solid #ffffff;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: transform 0.2s ease;
     }
     button:hover {
-      background-color: #e64a19;
+      transform: scale(1.05);
     }
     #message {
       font-size: 22px;
-      margin-top: 30px;
+      margin-top: 20px;
       color: #00695c;
     }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9999;
+    #loader {
+      margin-top: 20px;
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <h1>LGS 2026 Sayfası</h1>
-  <div id="countdown"></div>
-  <input type="password" id="secret" placeholder="Gizli kodu girin">
+  <h1>LGS 2026</h1>
+  <input type="text" id="name" placeholder="İsmini girdim">
   <br>
-  <button onclick="checkUnlock()">Enter</button>
-
-  <!-- Music Controls with Emojis -->
-  <div style="margin-top: 20px;">
-    <button onclick="playMusic()">▶️</button>
-    <button onclick="pauseMusic()">⏸️</button>
-  </div>
+  <input type="password" id="password" placeholder="Şifre girdir">
+  <br>
+  <button onclick="login()">Gir</button>
 
   <div id="message"></div>
+  <div id="loader"></div>
 
-  <!-- Background music -->
-  <audio id="bg-music" autoplay loop>
-    <source src="background-music.mp3" type="audio/mpeg">
-    Tarayıcınız ses oynatmayı desteklemiyor.
-  </audio>
-
-  <!-- Confetti canvas -->
-  <canvas id="confetti-canvas"></canvas>
+  <!-- YouTube Buttons -->
+  <div style="margin-top: 30px;">
+    <button onclick="window.open('https://www.youtube.com/watch?v=VIDEO_ID1', '_blank')">📘 Türkçe Soruları</button>
+    <button onclick="window.open('https://www.youtube.com/watch?v=VIDEO_ID2', '_blank')">📗 Matematik Soruları</button>
+    <button onclick="window.open('https://www.youtube.com/watch?v=VIDEO_ID3', '_blank')">📙 Fen Bilimleri Soruları</button>
+  </div>
 
   <script>
-    const unlockDate = new Date("2026-06-12T00:00:00");
-    const now = new Date();
-    const countdownDiv = document.getElementById("countdown");
-    const messageDiv = document.getElementById("message");
+    function login() {
+      const name = document.getElementById("name").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-    const timeDiff = unlockDate - now;
-    const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+      if (password === "LGS2026" && name !== "") {
+        document.getElementById("message").innerText = `Girmeye başardın ${name}! Lütfen bekleyiniz...`;
+        document.getElementById("loader").style.display = "inline-block";
 
-    if (timeDiff > 0) {
-      countdownDiv.innerHTML = `Lütfen bekle: ${unlockDate.toLocaleDateString('tr-TR')} (${daysLeft} gün kaldı)`;
-    } else {
-      countdownDiv.innerHTML = `🎉 Sayfa artık erişilebilir!`;
-    }
-
-    function checkUnlock() {
-      const now = new Date();
-      const code = document.getElementById("secret").value;
-      const correctCode = "iloveyou1472";
-
-      // Removed playMusic();
-
-      if (now >= unlockDate && code === correctCode) {
-        messageDiv.innerHTML = `
-          <p>Umarım iyi bir liseye yerleşmişsindir!</p>
-          <p>450 netin üstüne çıkmışsındır, sonuna kadar başardın!</p>
-          <p>Seninle gurur duyuyorum 💙</p>
-        `;
-        launchConfetti();
-      } else if (code !== correctCode) {
-        messageDiv.innerHTML = `<p>Gizli kod yanlış. Lütfen tekrar deneyin.</p>`;
+        setTimeout(() => {
+          document.getElementById("loader").style.display = "none";
+          document.getElementById("message").innerText = `Yükleme tamamlandı, ${name}! 🎉`;
+        }, 3000);
       } else {
-        messageDiv.innerHTML = `
-          <p>Lütfen bekle: ${unlockDate.toLocaleDateString('tr-TR')} (${daysLeft} gün kaldı)</p>
-        `;
+        document.getElementById("message").innerText = "Şifre yanlış veya isim eksik. Lütfen tekrar deneyin.";
       }
-    }
-
-    function playMusic() {
-      const music = document.getElementById("bg-music");
-      music.muted = false;
-      music.play();
-    }
-
-    function pauseMusic() {
-      const music = document.getElementById("bg-music");
-      music.pause();
-    }
-
-    function launchConfetti() {
-      const canvas = document.getElementById('confetti-canvas');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      const ctx = canvas.getContext('2d');
-
-      const confetti = [];
-      for (let i = 0; i < 150; i++) {
-        confetti.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height - canvas.height,
-          r: Math.random() * 6 + 4,
-          d: Math.random() * 10 + 5,
-          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
-          tilt: Math.random() * 10 - 5
-        });
-      }
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        confetti.forEach(c => {
-          ctx.beginPath();
-          ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-          ctx.fillStyle = c.color;
-          ctx.fill();
-        });
-        update();
-      }
-
-      function update() {
-        confetti.forEach(c => {
-          c.y += c.d;
-          c.x += Math.sin(c.tilt);
-          if (c.y > canvas.height) {
-            c.y = -10;
-            c.x = Math.random() * canvas.width;
-          }
-        });
-      }
-
-      setInterval(draw, 30);
     }
   </script>
 </body>
