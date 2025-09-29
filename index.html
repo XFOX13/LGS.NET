@@ -10,13 +10,15 @@
       padding: 0;
       font-family: 'Quicksand', sans-serif;
       background-color: #d0eaff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       text-align: center;
       color: #2c3e50;
+    }
+    .stage {
+      display: none;
+      padding: 30px;
+    }
+    #stage1, #musicControls {
+      display: block;
     }
     input[type="text"], input[type="password"] {
       padding: 10px;
@@ -41,11 +43,6 @@
     button:hover {
       transform: scale(1.05);
     }
-    #message {
-      font-size: 22px;
-      margin-top: 20px;
-      color: #00695c;
-    }
     #loader {
       margin-top: 20px;
       border: 6px solid #f3f3f3;
@@ -54,44 +51,19 @@
       width: 40px;
       height: 40px;
       animation: spin 1s linear infinite;
-      display: none;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    #reveal {
-      display: none;
-      margin-top: 30px;
-      animation: fadeIn 1s ease-in-out;
-    }
     .photo-block {
       margin-top: 20px;
-      text-align: center;
-    }
-    .photo-block button {
-      background-color: #ffeb3b;
-      color: #2c3e50;
-      border: 2px solid white;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 18px;
-      cursor: pointer;
-      margin-bottom: 10px;
-      transition: transform 0.2s ease;
-    }
-    .photo-block button:hover {
-      transform: scale(1.05);
     }
     .photo-block img {
       width: 300px;
       border: 2px solid white;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -101,13 +73,6 @@
   <!-- Countdown -->
   <p id="countdown"></p>
 
-  <!-- Inputs -->
-  <input type="text" id="name" placeholder="İsmini girdim">
-  <br>
-  <input type="password" id="password" placeholder="Şifre girdir">
-  <br>
-  <button onclick="login()">Gir</button>
-
   <!-- Music Controls (always visible) -->
   <div id="musicControls">
     <button onclick="playMusic()">▶️</button>
@@ -115,13 +80,23 @@
     <audio id="bgMusic" src="background-music.mp3" loop></audio>
   </div>
 
-  <!-- Message + Loader -->
-  <div id="message"></div>
-  <div id="loader"></div>
+  <!-- Stage 1: Entry -->
+  <div id="stage1" class="stage">
+    <input type="text" id="name" placeholder="İsmini girdim">
+    <br>
+    <input type="password" id="password" placeholder="Şifre girdir">
+    <br>
+    <button style="background-color:red; color:white;" onclick="login()">Gir</button>
+  </div>
 
-  <!-- Reveal Section -->
-  <div id="reveal">
-    <!-- First Photo Block -->
+  <!-- Stage 2: Validation -->
+  <div id="stage2" class="stage">
+    <p id="message" style="font-size:22px; color:#00695c;"></p>
+    <div id="loader"></div>
+  </div>
+
+  <!-- Stage 3: Reveal -->
+  <div id="stage3" class="stage">
     <div class="photo-block">
       <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID1', '_blank')">
         LGS 2026'da nasıl Hazırlayacağın?
@@ -130,7 +105,6 @@
       <img src="your-photo-1.jpg" alt="LGS Hazırlık">
     </div>
 
-    <!-- Second Photo Block -->
     <div class="photo-block">
       <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID2', '_blank')">
         LGS 2026 için Strateji
@@ -139,7 +113,6 @@
       <img src="your-photo-2.jpg" alt="Strateji">
     </div>
 
-    <!-- Third Photo Block -->
     <div class="photo-block">
       <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID3', '_blank')">
         LGS Motivasyon
@@ -171,15 +144,18 @@
       const password = document.getElementById("password").value.trim();
 
       if (password === "LGS2026" && name !== "") {
+        // Hide Stage 1, show Stage 2
+        document.getElementById("stage1").style.display = "none";
+        document.getElementById("stage2").style.display = "block";
         document.getElementById("message").innerText = `Girmeye başardın ${name}!! Lütfen bekleyiniz...`;
-        document.getElementById("loader").style.display = "inline-block";
 
         setTimeout(() => {
-          document.getElementById("loader").style.display = "none";
-          document.getElementById("reveal").style.display = "block";
+          // Hide Stage 2, show Stage 3
+          document.getElementById("stage2").style.display = "none";
+          document.getElementById("stage3").style.display = "block";
         }, 10000);
       } else {
-        document.getElementById("message").innerText = "Şifre yanlış veya isim eksik. Lütfen tekrar deneyin.";
+        alert("Şifre yanlış veya isim eksik. Lütfen tekrar deneyin.");
       }
     }
   </script>
