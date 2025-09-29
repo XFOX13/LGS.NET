@@ -63,14 +63,35 @@
     #reveal {
       display: none;
       margin-top: 30px;
+      animation: fadeIn 1s ease-in-out;
     }
     .photo-block {
       margin-top: 20px;
+      text-align: center;
+    }
+    .photo-block button {
+      background-color: #ffeb3b;
+      color: #2c3e50;
+      border: 2px solid white;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: transform 0.2s ease;
+    }
+    .photo-block button:hover {
+      transform: scale(1.05);
     }
     .photo-block img {
       width: 300px;
       border: 2px solid white;
       border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -87,8 +108,8 @@
   <br>
   <button onclick="login()">Gir</button>
 
-  <!-- Music Controls -->
-  <div id="musicControls" style="display:none;">
+  <!-- Music Controls (always visible) -->
+  <div id="musicControls">
     <button onclick="playMusic()">▶️</button>
     <button onclick="pauseMusic()">⏸️</button>
     <audio id="bgMusic" src="background-music.mp3" loop></audio>
@@ -100,7 +121,7 @@
 
   <!-- Reveal Section -->
   <div id="reveal">
-    <!-- First Button + Photo -->
+    <!-- First Photo Block -->
     <div class="photo-block">
       <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID1', '_blank')">
         LGS 2026'da nasıl Hazırlayacağın?
@@ -109,15 +130,20 @@
       <img src="your-photo-1.jpg" alt="LGS Hazırlık">
     </div>
 
-    <!-- Placeholder for more -->
+    <!-- Second Photo Block -->
     <div class="photo-block">
-      <button>LGS 2026 için Strateji</button>
+      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID2', '_blank')">
+        LGS 2026 için Strateji
+      </button>
       <br>
       <img src="your-photo-2.jpg" alt="Strateji">
     </div>
 
+    <!-- Third Photo Block -->
     <div class="photo-block">
-      <button>LGS Motivasyon</button>
+      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID3', '_blank')">
+        LGS Motivasyon
+      </button>
       <br>
       <img src="your-photo-3.jpg" alt="Motivasyon">
     </div>
@@ -147,7 +173,6 @@
       if (password === "LGS2026" && name !== "") {
         document.getElementById("message").innerText = `Girmeye başardın ${name}!! Lütfen bekleyiniz...`;
         document.getElementById("loader").style.display = "inline-block";
-        document.getElementById("musicControls").style.display = "block";
 
         setTimeout(() => {
           document.getElementById("loader").style.display = "none";
