@@ -13,16 +13,13 @@
       text-align: center;
       color: #2c3e50;
     }
-
     .stage {
       display: none;
       padding: 30px;
     }
-
-    #stage1, #stage2, #musicControls {
+    #stage1, #musicControls {
       display: block;
     }
-
     input[type="text"], input[type="password"] {
       padding: 10px;
       font-size: 18px;
@@ -32,7 +29,6 @@
       width: 250px;
       background-color: #f9f9f9;
     }
-
     button {
       padding: 12px 24px;
       font-size: 18px;
@@ -44,11 +40,9 @@
       cursor: pointer;
       transition: transform 0.2s ease;
     }
-
     button:hover {
       transform: scale(1.05);
     }
-
     #loader {
       margin: 20px auto;
       border: 6px solid #f3f3f3;
@@ -58,38 +52,19 @@
       height: 40px;
       animation: spin 1s linear infinite;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
-    /* Stage 3 with Canva background */
-    #stage3 {
-      display: none;
-      background: url('canva-lgs2026.png') no-repeat center center;
-      background-size: cover;
-      height: 100vh;
-      position: relative;
-      color: white;
-    }
-
     .photo-block {
-      position: absolute;
-      text-align: center;
+      margin-top: 20px;
     }
-
     .photo-block img {
       width: 300px;
-      border-radius: 10px;
       border: 2px solid white;
-      margin-top: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-
-    /* Positioning blocks */
-    #block1 { top: 100px; left: 80px; }
-    #block2 { top: 100px; right: 80px; }
-    #block3 { bottom: 120px; left: 80px; }
   </style>
 </head>
 <body>
@@ -98,7 +73,7 @@
   <!-- Countdown -->
   <p id="countdown"></p>
 
-  <!-- Music Controls -->
+  <!-- Music Controls (always visible) -->
   <div id="musicControls">
     <button onclick="playMusic()">▶️</button>
     <button onclick="pauseMusic()">⏸️</button>
@@ -120,30 +95,30 @@
     <div id="loader"></div>
   </div>
 
-  <!-- Stage 3: Canva-style Reveal -->
+  <!-- Stage 3: Reveal -->
   <div id="stage3" class="stage">
-    <div id="block1" class="photo-block">
+    <div class="photo-block">
       <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID1', '_blank')">
-        LGS'ye Nasıl Hazırlayacağım?
+        LGS 2026'da nasıl Hazırlayacağın?
       </button>
       <br>
-      <img src="your-photo-1.jpg" alt="Hazırlık">
+      <img src="your-photo-1.jpg" alt="LGS Hazırlık">
     </div>
 
-    <div id="block2" class="photo-block">
+    <div class="photo-block">
       <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID2', '_blank')">
-        Liseler Kaç Puanla Alır?
+        LGS 2026 için Strateji
       </button>
       <br>
-      <img src="your-photo-2.jpg" alt="Puanlar">
+      <img src="your-photo-2.jpg" alt="Strateji">
     </div>
 
-    <div id="block3" class="photo-block">
+    <div class="photo-block">
       <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID3', '_blank')">
-        Nasıl LGS'ye Çalışmak Programı Yapabilirim?
+        LGS Motivasyon
       </button>
       <br>
-      <img src="your-photo-3.jpg" alt="Program">
+      <img src="your-photo-3.jpg" alt="Motivasyon">
     </div>
   </div>
 
@@ -169,11 +144,13 @@
       const password = document.getElementById("password").value.trim();
 
       if (password === "LGS2026" && name !== "") {
+        // Hide Stage 1, show Stage 2
         document.getElementById("stage1").style.display = "none";
         document.getElementById("stage2").style.display = "block";
         document.getElementById("message").innerText = `Girmeye başardın ${name}!! Lütfen bekleyiniz...`;
 
         setTimeout(() => {
+          // Hide Stage 2, show Stage 3
           document.getElementById("stage2").style.display = "none";
           document.getElementById("stage3").style.display = "block";
         }, 10000);
