@@ -9,8 +9,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Quicksand', sans-serif;
-      background: url('your-background.png') no-repeat center center;
-      background-size: cover;
+      background-color: #d0eaff;
       text-align: center;
       color: #2c3e50;
     }
@@ -65,28 +64,31 @@
       100% { transform: rotate(360deg); }
     }
 
-    .photo-block {
-      margin: 40px auto;
-      max-width: 400px;
-      background: rgba(255,255,255,0.2);
-      padding: 20px;
-      border-radius: 12px;
-      backdrop-filter: blur(4px);
+    /* Stage 3 layout over Canva background */
+    #stage3 {
+      display: none;
+      background: url('canva-lgs2026.png') no-repeat center center;
+      background-size: cover;
+      height: 100vh;
+      position: relative;
     }
 
-    .photo-block h2 {
-      color: #ffeb3b;
-      font-size: 22px;
-      margin-bottom: 10px;
+    .photo-block {
+      position: absolute;
+      text-align: center;
     }
 
     .photo-block img {
-      width: 100%;
-      border: 2px solid white;
+      width: 300px;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 2px solid white;
       margin-top: 10px;
     }
+
+    /* Positioning each block */
+    #block1 { top: 200px; left: 100px; }
+    #block2 { top: 200px; right: 100px; }
+    #block3 { bottom: 200px; left: 100px; }
   </style>
 </head>
 <body>
@@ -117,25 +119,28 @@
     <div id="loader"></div>
   </div>
 
-  <!-- Stage 3: Reveal -->
+  <!-- Stage 3: Canva-style Reveal -->
   <div id="stage3" class="stage">
-    <div class="photo-block">
-      <h2>LGS'ye Nasıl Hazırlayacağım?</h2>
-      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID1', '_blank')">İzle</button>
+    <div id="block1" class="photo-block">
+      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID1', '_blank')">
+        LGS'ye Nasıl Hazırlayacağım?
+      </button>
       <br>
       <img src="your-photo-1.jpg" alt="Hazırlık">
     </div>
 
-    <div class="photo-block">
-      <h2>Liseler Kaç Puanla Alır?</h2>
-      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID2', '_blank')">İzle</button>
+    <div id="block2" class="photo-block">
+      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID2', '_blank')">
+        Liseler Kaç Puanla Alır?
+      </button>
       <br>
       <img src="your-photo-2.jpg" alt="Puanlar">
     </div>
 
-    <div class="photo-block">
-      <h2>Nasıl LGS'ye Çalışmak Programı Yapabilirim?</h2>
-      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID3', '_blank')">İzle</button>
+    <div id="block3" class="photo-block">
+      <button onclick="window.open('https://www.youtube.com/watch?v=YOUR_VIDEO_ID3', '_blank')">
+        Nasıl LGS'ye Çalışmak Programı Yapabilirim?
+      </button>
       <br>
       <img src="your-photo-3.jpg" alt="Program">
     </div>
